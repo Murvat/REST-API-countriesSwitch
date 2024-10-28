@@ -1,18 +1,38 @@
 import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 
 import { List } from '../components/List';
 import { Card } from '../components/Card';
 import { Controls } from '../components/Controls';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectAllCountries, selectCountries, selectVisibleCountries } from '../store/countries/countries-selectors';
+import { loadCountries } from '../store/countries/countries-actions';
+import { selectSearch } from '../store/controls/controls-selectors';
+import { selectControls } from '../store/controls/controls-selectors';
+
+
 
 export const HomePage = () => {
   const navigate = useNavigate();
 
-  const countries = [];
+  const dispatch = useDispatch();
+    const {search,region} = useSelector(selectControls)
+
+  const countries = useSelector(state=>selectVisibleCountries(state,{search,region}));
+  const { status, error, qty } = useSelector(selectCountries);
+
+  useEffect(() => {
+    if (!qty) {
+         dispatch(loadCountries())
+    }
+  },[qty,dispatch])
 
   return (
     <>
       <Controls />
-
+      {error && <h2>Can't fetch data</h2>}
+      {status === 'loading' && <h2>Loading...</h2>}
+      {status === 'received' && (
       <List>
             {countries.map((c) => {
               const countryInfo = {
@@ -43,6 +63,8 @@ export const HomePage = () => {
               );
             })}
           </List>
+
+      )}
     </>
   );
 };
