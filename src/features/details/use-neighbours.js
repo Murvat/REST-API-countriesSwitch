@@ -12,5 +12,5 @@ export const useNeighbours = (borders=[]) => {
     }
   }, [borders, dispatch]);
     
-    return neighbours
+  return neighbours;
 }
