@@ -17,6 +17,7 @@ This is a React application that provides users with a list of countries, their 
 
 This app provides a list of countries along with their flags. Users can filter countries based on their name and region. By clicking on a country, users can view detailed information about the country, including its population, region, capital, and neighboring countries.
 ## Live:
+https://countries-searcher-rr.netlify.app/
 
 ## Technologies Used
 
